@@ -1,0 +1,159 @@
+/* common csss */
+
+.input_v1 {
+  @apply border w-full font-semibold rounded-md border-t-fourth focus:border-b-fourth focus:border-t-white  outline-none py-2 px-3;
+}
+
+.button_v1 {
+  @apply mt-5 transform active:scale-[1.04] transition-[.4s] bg-blue-400 py-2 px-3 w-full font-bold text-white rounded-lg;
+}
+
+.button_v2 {
+  @apply bg-secondary bg-secondary px-2 rounded-md active:scale-[1.04];
+}
+
+.button_v3 {
+  @apply bg-red-300  px-2 rounded-md active:scale-[1.04];
+}
+
+.button_v4 {
+  @apply bg-fourth  px-2 rounded-md active:scale-[1.04];
+}
+
+.error {
+  @apply text-red-500 text-base py-1;
+}
+
+.heading {
+  @apply text-center text-[25px] md:text-[36px]  font-bold text-fourth;
+}
+
+.sub_title {
+  @apply text-center text-[16px] md:text-[18px] mb-[20px] md:mb-[60px]  text-fourth;
+}
+.show_password {
+  @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer;
+}
+
+/* end cpmmon css */
+
+/* Start Login CSS */
+.login {
+  @apply px-5 container mx-auto flex justify-around items-center flex-wrap h-screen;
+}
+
+.login .left {
+  @apply w-[100%] hidden md:block md:w-[40%];
+}
+
+.login .right {
+  @apply w-[100%] md:w-[40%];
+}
+
+/* End Login CSS */
+
+/* Registration css */
+
+.signup {
+  @apply container  mx-auto px-3  flex  justify-between flex-wrap;
+}
+
+.signup .left {
+  @apply w-[100%] md:w-[45%]  mt-[30px] md:mt-[120px];
+}
+/* End Registration css */
+
+/* header */
+
+#header {
+  @apply py-1 bg-third sticky top-0 left-0 z-[99];
+}
+
+#header .main {
+  @apply container px-2 mx-auto flex items-center justify-between;
+}
+
+#header .main .menu {
+  @apply flex gap-2 md:gap-10;
+}
+
+#header .main svg {
+  @apply text-2xl md:text-3xl text-red-600;
+}
+
+#header .image_name {
+  @apply flex  items-center gap-1 md:gap-3;
+}
+#header .image_name h1 {
+  @apply text-base md:font-bold  text-white;
+}
+#header .profile {
+  @apply w-[50px] md:w-[60px]  h-[50px] md:h-[60px]  relative rounded-full overflow-hidden;
+}
+
+#header .profile .profile_icon {
+  @apply absolute  w-[50px] md:w-[60px]  h-[50px] md:h-[60px] bg-fourth bg-opacity-[30%] cursor-pointer flex justify-center items-center invisible transition-shadow;
+}
+
+#header .profile:hover .profile_icon {
+  @apply visible;
+}
+
+/* end header */
+
+/* start home page */
+#home {
+  @apply container  flex justify-between flex-wrap;
+}
+#home .item {
+  @apply w-full md:w-[48%] lg:w-[32%]  mb-4 px-1 md:px-0;
+}
+
+#home .item .content_item {
+  @apply h-[350px]   shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative overflow-y-scroll;
+}
+
+#home .item .content_item .title {
+  @apply flex justify-between items-center sticky left-0 top-0 bg-white;
+}
+
+#home .item .content_item .title h1 {
+  @apply text-2xl ml-2 font-bold text-third;
+}
+
+#home .item .content_item .title svg {
+  @apply text-2xl text-third;
+}
+
+#home .item .content_item .user {
+  @apply flex justify-between items-center py-1 border-b border-secondary;
+}
+
+#home .item .content_item .user .img_name {
+  @apply flex items-center gap-2 ml-1;
+}
+
+#home .item .content_item .user .img_name .img {
+  @apply w-[65px] h-[65px] rounded-full bg-third;
+}
+
+#home .item .content_item .user .img_name .name h1 {
+  @apply font-bold text-fourth;
+}
+
+#home .item .content_item .user .img_name .name p {
+  @apply text-base font-[16px] italic;
+}
+
+#home .item .content_item .user .buttons {
+  @apply flex gap-2 mr-3;
+}
+
+::-webkit-scrollbar {
+  @apply w-[3px];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary;
+}
+/* end home page */
