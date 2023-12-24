@@ -57,7 +57,7 @@ const Singup = () => {
         // updated user
         updateProfile(auth.currentUser, {
           displayName: fullName,
-          photoURL: "../../public/images/profile.jpg",
+          photoURL: "https://placehold.co/100",
         })
           .then(() => {
             const db = getDatabase();
