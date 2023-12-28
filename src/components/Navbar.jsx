@@ -22,15 +22,18 @@ import {
   ref,
   uploadString,
 } from "firebase/storage";
+import { getDatabase, ref as dbRef, update } from "firebase/database";
 const Navbar = () => {
   const data = useSelector((state) => state.userInfo.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const storage = getStorage();
   const auth = getAuth();
+  const db = getDatabase();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [image, setImage] = useState("");
+  const [errorImage, setErrorImage] = useState(null);
   const [cropData, setCropData] = useState("#");
   const cropperRef = createRef();
   const [loading, setLoading] = useState(false);
@@ -63,12 +66,27 @@ const Navbar = () => {
             photoURL: downloadURL,
           });
 
+          update(dbRef(db, "users/" + auth.currentUser.uid), {
+            photoURL: downloadURL,
+          });
+
           dispatch(userInfo({ ...data, photoURL: downloadURL }));
           localStorage.setItem("user", JSON.stringify(auth.currentUser));
 
           setLoading(false);
 
           setIsModalOpen(false);
+
+          toast.success("Profile Image Updated Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
       });
     }
@@ -77,7 +95,16 @@ const Navbar = () => {
   const handleUploadImage = (e) => {
     e.preventDefault();
 
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
     let files;
+    if (!allowedTypes.includes(e.target.files[0].type)) {
+      setErrorImage(
+        "Invalid file type. Please select a JPEG, PNG, or GIF image."
+      );
+    } else {
+      setErrorImage(null);
+    }
+
     if (e.dataTransfer) {
       files = e.dataTransfer.files;
     } else if (e.target) {
@@ -150,7 +177,8 @@ const Navbar = () => {
             </div>
           )}
 
-          {image && (
+          <p className="text-red-500">{errorImage}</p>
+          {image && !errorImage && (
             <Cropper
               ref={cropperRef}
               style={{ height: 300, width: "100%" }}
@@ -194,6 +222,7 @@ const Navbar = () => {
               <button
                 onClick={submitUploadImage}
                 className="bg-fourth px-2 py-1 font-semibold rounded-md"
+                disabled={errorImage ? true : false}
               >
                 Upload
               </button>

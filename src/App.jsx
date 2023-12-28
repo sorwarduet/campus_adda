@@ -15,8 +15,6 @@ import HomeLayout from "./layout/HomeLayout";
 import { useSelector } from "react-redux";
 
 function App() {
-  const userData = useSelector((state) => state.userInfo.users);
-  console.log(userData);
   const router = createBrowserRouter([
     {
       path: "/",
