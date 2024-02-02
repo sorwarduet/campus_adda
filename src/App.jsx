@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import LoginLayout from "./layout/LoginLayout";
 import HomeLayout from "./layout/HomeLayout";
 import { useSelector } from "react-redux";
+import Chat from "./pages/Chat.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,8 +37,14 @@ function App() {
       children: [
         {
           path: "/home",
-          element: <Home />,
+          element: <Home />
         },
+        {
+          path: "/home/chat",
+          element: <Chat />,
+        }
+
+
       ],
     },
     {

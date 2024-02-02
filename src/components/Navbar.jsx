@@ -4,7 +4,6 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { IoMdCloudUpload } from "react-icons/io";
-import profile_image from "../assets/images/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, signOut, updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -14,7 +13,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { useState, createRef } from "react";
 import Modal from "./Modal";
-import { useNavigate } from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import { Circles } from "react-loader-spinner";
 import {
   getDownloadURL,
@@ -22,7 +21,7 @@ import {
   ref,
   uploadString,
 } from "firebase/storage";
-import { getDatabase, ref as dbRef, update } from "firebase/database";
+import { getDatabase } from "firebase/database";
 const Navbar = () => {
   const data = useSelector((state) => state.userInfo.users);
   const dispatch = useDispatch();
@@ -63,10 +62,6 @@ const Navbar = () => {
       uploadString(storageRef, message4, "data_url").then((snapshot) => {
         getDownloadURL(storageRef).then((downloadURL) => {
           updateProfile(auth.currentUser, {
-            photoURL: downloadURL,
-          });
-
-          update(dbRef(db, "users/" + auth.currentUser.uid), {
             photoURL: downloadURL,
           });
 
@@ -147,8 +142,9 @@ const Navbar = () => {
     <nav id="header">
       <div className="main">
         <div className="menu">
-          <FaHome />
-          <BsChat />
+          <NavLink to="/home"> <FaHome /></NavLink>
+          <NavLink to="/home/chat">  <BsChat /></NavLink>
+
           <IoIosNotificationsOutline />
           <CiSettings />
 

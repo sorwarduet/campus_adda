@@ -64,7 +64,6 @@ const Singup = () => {
             set(ref(db, "users/" + auth.currentUser.uid), {
               fullName: auth.currentUser.displayName,
               email: auth.currentUser.email,
-              photoURL: "https://placehold.co/100",
             });
 
             setLoading(false);

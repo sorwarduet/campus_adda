@@ -3,6 +3,9 @@
 .input_v1 {
   @apply border w-full font-semibold rounded-md border-t-fourth focus:border-b-fourth focus:border-t-white  outline-none py-2 px-3;
 }
+.input_v2 {
+  @apply border w-full font-semibold rounded-md border-fourth focus:border-third   outline-none py-2 px-3;
+}
 
 .button_v1 {
   @apply mt-5 transform active:scale-[1.04] transition-[.4s] bg-blue-400 py-2 px-3 w-full font-bold text-white rounded-lg;
@@ -157,3 +160,72 @@
   @apply bg-secondary;
 }
 /* end home page */
+
+/*chat css*/
+#chat .item {
+  @apply w-full   mb-4 px-1 md:px-0;
+}
+
+#chat .item .content_item {
+  @apply h-[300px]   shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative overflow-y-scroll;
+}
+
+#chat .item .content_item .title {
+  @apply flex justify-between items-center sticky left-0 top-0 bg-white;
+}
+
+#chat .item .content_item .title {
+  @apply flex justify-between items-center sticky left-0 top-0 bg-white;
+}
+
+#chat .item .content_item .title h1 {
+  @apply text-2xl ml-2 font-bold text-third;
+}
+
+#chat .item  .title svg {
+  @apply text-2xl text-third;
+}
+
+#chat .item  .user {
+  @apply flex justify-between items-center py-1 border-b border-secondary;
+}
+
+#chat .item  .user .img_name {
+  @apply flex items-center gap-2 ml-1;
+}
+
+#chat .item  .user .img_name .img {
+  @apply w-[65px] h-[65px] rounded-full bg-third;
+}
+
+#chat .item  .user .img_name .name h1 {
+  @apply font-bold text-fourth;
+}
+
+#chat .item  .user .img_name .name p {
+  @apply text-base font-[16px] italic;
+}
+
+#chat .item  .user .buttons {
+  @apply flex gap-2 mr-3;
+}
+
+#right_chat .user {
+  @apply flex justify-between items-center py-1 border-b border-secondary;
+}
+
+#right_chat .user .img_name {
+  @apply flex items-center gap-2 ml-1;
+}
+
+#right_chat .user .img_name .img {
+  @apply w-[65px] h-[65px] rounded-full bg-third;
+}
+
+#right_chat .user .img_name .name h1 {
+  @apply font-bold text-fourth;
+}
+
+#right_chat .user .img_name .name p {
+  @apply text-base font-[16px] italic;
+}

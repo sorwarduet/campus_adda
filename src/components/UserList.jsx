@@ -3,10 +3,14 @@ import { getDatabase, ref, onValue, set, push } from "firebase/database";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Circles } from "react-loader-spinner";
+import ProfileImg from "./ProfileImg";
+import { toast } from "react-toastify";
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);
   const [friendRequstList, setFriendRequstList] = useState([]);
+  const [friendList, setFriendList] = useState([]);
+  const [blockList, setBlockList] = useState([]);
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state.userInfo.users);
   const db = getDatabase();
@@ -35,6 +39,17 @@ const UserList = () => {
       senderName: data.displayName,
       senderEmail: data.email,
       senderPhotoURL: data.photoURL,
+    }).then(() => {
+      toast.success("Sent Friend Request Successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     });
   };
 
@@ -47,6 +62,30 @@ const UserList = () => {
         list.push(item.val().reciverId + item.val().senderId);
       });
       setFriendRequstList(list);
+    });
+  }, []);
+
+  useEffect(() => {
+    const friendRef = ref(db, "friend/");
+
+    onValue(friendRef, (snapshot) => {
+      let list = [];
+      snapshot.forEach((item) => {
+        list.push(item.val().reciverId + item.val().senderId);
+      });
+      setFriendList(list);
+    });
+  }, []);
+
+  useEffect(() => {
+    const friendBlockRef = ref(db, "block/");
+
+    onValue(friendBlockRef, (snapshot) => {
+      let list = [];
+      snapshot.forEach((item) => {
+        list.push(item.val().blockFriendId + item.val().blockById);
+      });
+      setBlockList(list);
     });
   }, []);
 
@@ -74,10 +113,7 @@ const UserList = () => {
           <div className="user" key={user.id}>
             <div className="img_name">
               <div className="img">
-                <img
-                  src={user.photoURL}
-                  className="w-full rounded-full h-full"
-                />
+                <ProfileImg id={user.id} />
               </div>
               <div className="name">
                 <h1>{user.fullName}</h1>
@@ -85,9 +121,15 @@ const UserList = () => {
               </div>
             </div>
             <div className="buttons">
-              {friendRequstList.includes(user.id + data?.uid) ||
-              friendRequstList.includes(data?.uid + user.id) ? (
-                <button className="button_v1">Send Requst</button>
+              {friendList.includes(user.id + data?.uid) ||
+              friendList.includes(data?.uid + user.id) ? (
+                <button className="button_v3">Friend</button>
+              ) : friendRequstList.includes(user.id + data?.uid) ||
+                friendRequstList.includes(data?.uid + user.id) ? (
+                <button className="button_v4">Send Requst</button>
+              ) : blockList.includes(user.id + data?.uid) ||
+                blockList.includes(data?.uid + user.id) ? (
+                <button className="button_v2">Block</button>
               ) : (
                 <button
                   className="button_v2"
