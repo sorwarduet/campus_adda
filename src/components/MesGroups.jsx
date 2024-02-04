@@ -12,7 +12,8 @@ const MesGroups = () => {
     const dispatch=useDispatch();
 
     const handleActiveGroup=(item)=>{
-        const activeFriend={status: 'group', id:item.groupId, name:item.groupName};
+
+        const activeFriend={status: 'group', id:item.id, name:item.groupName};
         dispatch(activeInfo(activeFriend));
         localStorage.setItem("activeFriend", JSON.stringify(activeFriend));
     }

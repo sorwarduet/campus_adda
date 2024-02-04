@@ -167,7 +167,7 @@
 }
 
 #chat .item .content_item {
-  @apply h-[300px]   shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative overflow-y-scroll;
+  @apply h-[280px]   shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] relative overflow-y-scroll;
 }
 
 #chat .item .content_item .title {
