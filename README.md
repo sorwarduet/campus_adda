@@ -9,6 +9,9 @@ To get started with the Campus Add Chat Application, follow the steps below:
 1. Clone the repository:
    ```bash
    git clone https://github.com/sorwarduet/campus_adda.git
+   cd campus_adda
+   npm install
+ 
   
 ## Configuration with Firebase
 
@@ -30,3 +33,6 @@ To get started with the Campus Add Chat Application, follow the steps below:
    - Open `src/firebase.config.js` in the project.
    - Replace the existing Firebase configuration with the one you copied.
 
+## Runing local
+```bash
+   npm run dev
