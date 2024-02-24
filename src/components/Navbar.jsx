@@ -5,7 +5,7 @@ import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { IoMdCloudUpload } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth, signOut, updateProfile } from "firebase/auth";
+import { getAuth, signOut, updateProfile, updatePassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { userInfo } from "../reducers/userSlice";
 
@@ -13,7 +13,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { useState, createRef } from "react";
 import Modal from "./Modal";
-import {NavLink, useNavigate} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Circles } from "react-loader-spinner";
 import {
   getDownloadURL,
@@ -22,6 +22,7 @@ import {
   uploadString,
 } from "firebase/storage";
 import { getDatabase } from "firebase/database";
+import Notification from "./Notification";
 const Navbar = () => {
   const data = useSelector((state) => state.userInfo.users);
   const dispatch = useDispatch();
@@ -31,11 +32,15 @@ const Navbar = () => {
   const db = getDatabase();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModal, setIsModal] = useState(false);
   const [image, setImage] = useState("");
   const [errorImage, setErrorImage] = useState(null);
   const [cropData, setCropData] = useState("#");
   const cropperRef = createRef();
   const [loading, setLoading] = useState(false);
+  const [notification, setNotifcation] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -138,15 +143,78 @@ const Navbar = () => {
         console.log(error);
       });
   };
+
+  const showNotification = () => {
+    setNotifcation(!notification);
+  };
+
+  const openModalPassword = () => {
+    setIsModal(true);
+  };
+
+  const closeModalPassword = () => {
+    setIsModal(false);
+  };
+
+  const handelPasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmitPassword = (e) => {
+    e.preventDefault();
+    if (password == "") {
+      setPasswordError("Empty passwrod");
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+    } else {
+      setPasswordError("");
+    }
+
+    if (password && passwordError == "") {
+      const user = auth.currentUser;
+
+      updatePassword(user, password)
+        .then(() => {
+          setPassword("");
+          setIsModal(false);
+          toast.success("Change Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   return (
     <nav id="header">
       <div className="main">
         <div className="menu">
-          <NavLink to="/home"> <FaHome /></NavLink>
-          <NavLink to="/home/chat">  <BsChat /></NavLink>
+          <NavLink to="/home">
+            {" "}
+            <FaHome />
+          </NavLink>
+          <NavLink to="/home/chat">
+            {" "}
+            <BsChat />
+          </NavLink>
 
-          <IoIosNotificationsOutline />
-          <CiSettings />
+          <div className="relative">
+            <IoIosNotificationsOutline
+              onClick={showNotification}
+              className="cursor-pointer"
+            />
+
+            {notification && <Notification />}
+          </div>
+          <CiSettings onClick={openModalPassword} className="cursor-pointer" />
 
           <IoIosLogOut onClick={handleLogout} className="cursor-pointer " />
         </div>
@@ -160,6 +228,23 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isModal} onClose={closeModalPassword}>
+        <form onSubmit={handleSubmitPassword}>
+          <div className="flex flex-col">
+            <input
+              className="input_v1"
+              type="password"
+              onChange={handelPasswordChange}
+              placeholder="Enter New Password"
+            />
+            <p className="error">{passwordError}</p>
+          </div>
+          <div className="flex justify-center">
+            <button className="button_v1 ">Submit</button>
+          </div>
+        </form>
+      </Modal>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div className="flex flex-col">

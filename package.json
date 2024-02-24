@@ -23,6 +23,7 @@
     "react-router-dom": "^6.20.1",
     "react-toastify": "^9.1.3",
     "react-ts-typewriter": "^0.1.8-b",
+    "simple-peer": "^9.11.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
